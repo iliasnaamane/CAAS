@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 //[START all]
-package utils;
+package fr.polytech.unice.utils;
 
 import com.googlecode.objectify.ObjectifyService;
-import model.Task;
-import model.User;
+import fr.polytech.unice.model.Task;
+import fr.polytech.unice.model.User;
+
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

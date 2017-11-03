@@ -10,9 +10,9 @@
         <module>main</module>
         <module>services</module>
         <module>worker</module>
-        <module>bronze-worker</module>
+       <!-- <module>bronze-worker</module>
         <module>silver-worker</module>
-        <module>gold-worker</module>
+        <module>gold-worker</module>-->
     </modules>
 
     <groupId>fr.polytech.unice</groupId>

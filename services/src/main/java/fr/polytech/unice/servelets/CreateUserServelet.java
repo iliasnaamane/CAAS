@@ -1,13 +1,4 @@
-package servelets;
-
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
+package fr.polytech.unice.servelets;
 
 import java.io.IOException;
 
@@ -16,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.googlecode.objectify.ObjectifyService;
-import model.User;
+import fr.polytech.unice.model.User;
 
 
 public class CreateUserServelet extends HttpServlet {

@@ -8,8 +8,41 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>ear</packaging>
+    <version>${project.parent.version}</version>
+
 
     <artifactId>main</artifactId>
-
-
+    <prerequisites>
+        <maven>3.3.9</maven>
+    </prerequisites>
+    <dependencies>
+        <dependency>
+          <groupId>fr.polytech.unice</groupId>
+          <artifactId>services</artifactId>
+          <version>${project.parent.version}</version>
+          <type>war</type>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <version>5</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <unpackTypes>war</unpackTypes>
+                    <!-- in order to interpolate version from pom into appengine-web.xml -->
+                    <filtering>true</filtering>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.appengine</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>${appengine.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
