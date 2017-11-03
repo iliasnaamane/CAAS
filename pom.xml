@@ -8,7 +8,9 @@
     <version>1.0</version>
     <modules>
         <module>main</module>
+        <module>services</module>
     </modules>
+
     <groupId>fr.polytech.unice</groupId>
     <artifactId>fr.polytech.unice</artifactId>
     <properties>
