@@ -9,6 +9,7 @@
     <modules>
         <module>main</module>
         <module>services</module>
+        <module>worker</module>
     </modules>
 
     <groupId>fr.polytech.unice</groupId>
