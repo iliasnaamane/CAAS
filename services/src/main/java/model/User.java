@@ -18,14 +18,12 @@ public class User {
 
     @Id public Long id;
     @Index public String username;
-    public String password;
     public String mail;
     public int offer;
 
-    public User(String username, String mail, int offer) {
+    public User(String username, String mail,int offer) {
         this.username = username;
         this.mail =mail;
         this.offer = offer;
     }
-
 }
