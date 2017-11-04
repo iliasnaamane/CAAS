@@ -24,7 +24,7 @@ request
 "offer" : 1
 }
 ```
-### create user
+### Upload vido
 http://localhost:8080/uploadVideo
 
 request
