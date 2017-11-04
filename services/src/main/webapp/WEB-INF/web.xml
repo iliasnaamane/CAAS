@@ -15,6 +15,11 @@
         <servlet-class>fr.polytech.unice.servlets.UploadVideo</servlet-class>
     </servlet>
 
+    <servlet>
+      <servlet-name>SendMail</servlet-name>
+      <servlet-class>fr.polytech.unice.servlets.SendMail</servlet-class>
+    </servlet>
+
 
 
 
@@ -26,6 +31,11 @@
     <servlet-mapping>
         <servlet-name>UploadVideo</servlet-name>
         <url-pattern>/uploadVideo</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+      <servlet-name>SendMail</servlet-name>
+      <url-pattern>/sendMail</url-pattern>
     </servlet-mapping>
 
 
