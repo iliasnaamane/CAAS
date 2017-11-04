@@ -1,6 +1,9 @@
 package fr.polytech.unice.servlets;
 
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.taskqueue.Queue;
+import com.google.appengine.api.taskqueue.QueueFactory;
+import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.googlecode.objectify.Key;
@@ -67,12 +70,38 @@ public class UploadVideo extends HttpServlet {
         String original = user.username.toLowerCase() + "-" + UUID.randomUUID().toString();
         String converted = user.username.toLowerCase() + "-" + UUID.randomUUID().toString();
 
+        //her come the stoke of the original video
+
 
         // Create a new task
         Task task = new Task(Key.create(User.class, user.id), original, converted, (format != null) ? format : "unknown");
         ObjectifyService.ofy().save().entity(task).now();
         result.getWriter().println("task has been create successfully ");
 
+        // Enqueue task
+        Queue queue;
+        String url;
+        switch (user.offer) {
+            case User.BRONZE_OFFER:
+                queue = QueueFactory.getQueue("bronze-queue");
+                url = "/worker/bronze";
+                break;
+            case User.SILVER_OFFER:
+                queue = QueueFactory.getQueue("silver-queue");
+                url = "/worker/silver";
+                break;
+          /*  case User.GOLD_OFFER:
+                queue = QueueFactory.getQueue("gold-queue");
+                url = "/worker/gold";
+                break;*/
+            default:
+                result.sendRedirect("/");
+                return;
+        }
+        queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)));
+
+
+        //send email
     }
 
 }

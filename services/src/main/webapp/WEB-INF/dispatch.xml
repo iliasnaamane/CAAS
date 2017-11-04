@@ -2,14 +2,14 @@
 <dispatch-entries>
     <dispatch>
         <url>*/worker/bronze</url>
-        <module>worker-bronze</module>
+        <module>bronze-worker</module>
     </dispatch>
     <dispatch>
         <url>*/worker/silver</url>
-        <module>worker-silver</module>
+        <module>silver-worker</module>
     </dispatch>
     <dispatch>
         <url>*/worker/gold</url>
-        <module>worker-gold</module>
+        <module>gold-worker</module>
     </dispatch>
 </dispatch-entries>

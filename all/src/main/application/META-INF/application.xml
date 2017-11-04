@@ -11,6 +11,18 @@
             <context-root>services</context-root>
         </web>
     </module>
+    <module>
+        <web>
+            <web-uri>bronze-worker-1.0.war</web-uri>
+            <context-root>bronze-worker</context-root>
+        </web>
+    </module>
+    <module>
+        <web>
+            <web-uri>silver-worker-1.0.war</web-uri>
+            <context-root>silver-worker</context-root>
+        </web>
+    </module>
    <!-- <module>
         <web>
             <web-uri>services-1.0.war</web-uri>

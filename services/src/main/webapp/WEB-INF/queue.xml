@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queue-entries>
+    <queue>
+        <name>bronze-queue</name>
+        <mode>push</mode>
+        <rate>1/s</rate>
+        <max-concurrent-requests>1</max-concurrent-requests>
+        <target>worker-bronze</target>
+    </queue>
+    <queue>
+        <name>silver-queue</name>
+        <mode>push</mode>
+        <rate>1/s</rate>
+        <target>worker-silver</target>
+        <max-concurrent-requests>10</max-concurrent-requests>
+    </queue>
+    <queue>
+        <name>gold-queue</name>
+        <mode>push</mode>
+        <rate>1/s</rate>
+        <target>worker-gold</target>
+        <max-concurrent-requests>20</max-concurrent-requests>
+    </queue>
+</queue-entries>
