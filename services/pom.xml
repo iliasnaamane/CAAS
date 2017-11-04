@@ -17,7 +17,15 @@
     <prerequisites>
         <maven>3.3.9</maven>
     </prerequisites>
+    <dependencies>
+        <!-- Compile/runtime dependencies -->
+        <dependency>
+            <groupId>fr.polytech.unice</groupId>
+            <artifactId>worker</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
+    </dependencies>
     <build>
         <!-- for hot reload of the web application-->
         <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>

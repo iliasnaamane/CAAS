@@ -11,18 +11,19 @@
     <packaging>ear</packaging>
     <version>${project.parent.version}</version>
 
+    <artifactId>all</artifactId>
 
-    <artifactId>main</artifactId>
     <prerequisites>
         <maven>3.3.9</maven>
     </prerequisites>
     <dependencies>
         <dependency>
-          <groupId>fr.polytech.unice</groupId>
-          <artifactId>services</artifactId>
-          <version>${project.parent.version}</version>
-          <type>war</type>
+            <groupId>fr.polytech.unice</groupId>
+            <artifactId>services</artifactId>
+            <version>${project.parent.version}</version>
+            <type>war</type>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>

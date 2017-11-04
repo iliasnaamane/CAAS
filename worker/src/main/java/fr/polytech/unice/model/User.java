@@ -5,13 +5,11 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import lombok.NoArgsConstructor;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-
 @Entity
 @NoArgsConstructor
 public class User {
 
+    // Offers
     public static final int BRONZE_OFFER = 1;
     public static final int SILVER_OFFER = 2;
     public static final int GOLD_OFFER = 3;
@@ -21,9 +19,10 @@ public class User {
     public String mail;
     public int offer;
 
-    public User(String username, String mail,int offer) {
+    public User(String username,String mail, int offer) {
         this.username = username;
-        this.mail =mail;
+        this.mail = mail;
         this.offer = offer;
     }
+
 }
