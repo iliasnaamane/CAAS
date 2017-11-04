@@ -17,9 +17,9 @@
         <maven>3.3.9</maven>
     </prerequisites>
 
+
     <dependencies>
         <!-- Compile/runtime dependencies -->
-
         <dependency>
             <groupId>fr.polytech.unice</groupId>
             <artifactId>worker</artifactId>
