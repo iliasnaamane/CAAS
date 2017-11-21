@@ -1,4 +1,5 @@
 #!/bin/bash
+#deployment
 cd all
 mvn appengine:update
 cd ..
