@@ -76,7 +76,7 @@ public class UploadVideo extends HttpServlet {
         // Create a new task
         Task task = new Task(Key.create(User.class, user.id), original, converted, (format != null) ? format : "unknown");
         ObjectifyService.ofy().save().entity(task).now();
-        result.getWriter().println("task has been create successfully ");
+        result.getWriter().println("task has been created successfully ");
 
         // Enqueue task
         Queue queue;
@@ -84,11 +84,11 @@ public class UploadVideo extends HttpServlet {
         switch (user.offer) {
             case User.BRONZE_OFFER:
                 queue = QueueFactory.getQueue("bronze-queue");
-                url = "/worker/bronze";
+                url = "/worker/bronze/";
                 break;
             case User.SILVER_OFFER:
                 queue = QueueFactory.getQueue("silver-queue");
-                url = "/worker/silver";
+                url = "/worker/silver/";
                 break;
           /*  case User.GOLD_OFFER:
                 queue = QueueFactory.getQueue("gold-queue");
@@ -98,7 +98,8 @@ public class UploadVideo extends HttpServlet {
                 result.sendRedirect("/");
                 return;
         }
-        queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)));
+        result.getWriter().println("queue change ");
+        queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf(videoDuration)));
 
 
         //send email

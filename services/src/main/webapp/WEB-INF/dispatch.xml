@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dispatch-entries>
     <dispatch>
-        <url>*/worker/bronze</url>
+        <url>*/worker/bronze/*</url>
         <module>bronze-worker</module>
     </dispatch>
-    <dispatch>
-        <url>*/worker/silver</url>
-        <module>silver-worker</module>
-    </dispatch>
-    <dispatch>
-        <url>*/worker/gold</url>
-        <module>gold-worker</module>
-    </dispatch>
 </dispatch-entries>
+
