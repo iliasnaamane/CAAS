@@ -4,6 +4,8 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
+import com.google.appengine.tools.cloudstorage.*;
+import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.googlecode.objectify.Key;
@@ -16,13 +18,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.channels.Channels;
 import java.util.List;
 import java.util.UUID;
 
 
 public class UploadVideo extends HttpServlet {
 
-
+    private final GcsService gcsService = GcsServiceFactory.createGcsService(new RetryParams.Builder()
+            .initialRetryDelayMillis(10)
+            .retryMaxAttempts(10)
+            .totalRetryPeriodMillis(15000)
+            .build());
 
     @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException {
         result.setContentType("text/html");
@@ -71,6 +78,21 @@ public class UploadVideo extends HttpServlet {
         String converted = user.username.toLowerCase() + "-" + UUID.randomUUID().toString();
 
         //her come the stoke of the original video
+
+       //TODO
+
+        /*********************************
+         * stoke the video into google cloud storage
+         *
+         */
+
+        // Write original file
+        GcsFileOptions instance = GcsFileOptions.getDefaultInstance();
+        GcsFilename fileName = new GcsFilename("regional-pro", original);
+        try (GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, instance)) {
+            ByteStreams.copy(req.getInputStream(), Channels.newOutputStream(outputChannel));
+        }
+        result.getWriter().println("video Original was save in cloud storage");
 
 
         // Create a new task
