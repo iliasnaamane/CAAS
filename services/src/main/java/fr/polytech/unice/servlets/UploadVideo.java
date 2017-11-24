@@ -25,11 +25,11 @@ import java.util.UUID;
 
 public class UploadVideo extends HttpServlet {
 
-    private final GcsService gcsService = GcsServiceFactory.createGcsService(new RetryParams.Builder()
+ /*   private final GcsService gcsService = GcsServiceFactory.createGcsService(new RetryParams.Builder()
             .initialRetryDelayMillis(10)
             .retryMaxAttempts(10)
             .totalRetryPeriodMillis(15000)
-            .build());
+            .build());*/
 
     @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException {
         result.setContentType("text/html");
@@ -86,13 +86,13 @@ public class UploadVideo extends HttpServlet {
          *
          */
 
-        // Write original file
+      /*  // Write original file
         GcsFileOptions instance = GcsFileOptions.getDefaultInstance();
         GcsFilename fileName = new GcsFilename("regional-pro", original);
         try (GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, instance)) {
             ByteStreams.copy(req.getInputStream(), Channels.newOutputStream(outputChannel));
         }
-        result.getWriter().println("video Original was save in cloud storage");
+        result.getWriter().println("video Original was save in cloud storage");*/
 
 
         // Create a new task

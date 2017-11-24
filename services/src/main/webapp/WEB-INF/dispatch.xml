@@ -4,5 +4,6 @@
         <url>*/worker/bronze/*</url>
         <module>bronze-worker</module>
     </dispatch>
+
 </dispatch-entries>
 
