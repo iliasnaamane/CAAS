@@ -4,8 +4,6 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
-import com.google.appengine.tools.cloudstorage.*;
-import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.googlecode.objectify.Key;
@@ -13,43 +11,25 @@ import com.googlecode.objectify.ObjectifyService;
 import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
 import fr.polytech.unice.servlets.utils.Mail;
-import fr.polytech.unice.servlets.utils.Util;
-
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.Channels;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
-
 public class ConversionVideo extends HttpServlet {
-
-
 
     @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException {
         result.setContentType("text/html");
 
-        //get username ,videoName and duration  from request
+        //get username ,videoName and format  from request
         JsonParser parser = new JsonParser();
         JsonObject obj = parser.parse(req.getReader()).getAsJsonObject();
 
         String username = obj.get("username").getAsString();
         String original = obj.get("original").getAsString();
         String format = obj.get("format").getAsString();
-
-
-        System.out.println("username : " + username);
-        System.out.println("videoName : " + original);
-        System.out.println("format : " + format);
-
 
         List<User> users = ObjectifyService.ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
 
@@ -76,7 +56,7 @@ public class ConversionVideo extends HttpServlet {
         }
 
 
-        // Reserve place
+        // Reserve place for converted video
         String converted = user.username.toLowerCase() + "-" + UUID.randomUUID().toString();
 
 
@@ -106,10 +86,13 @@ public class ConversionVideo extends HttpServlet {
                 return;
         }
         result.getWriter().println("queue change ");
+
         queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
 
         result.getWriter().println("Sending mail for notification your demande is en cours.");
+        result.getWriter().println("Sending mail for notification your demande is done.");
 
+        //send email
         Mail mail = new Mail();
         try {
           mail.sendSimpleMail(user.username, user.mail,original);
@@ -117,7 +100,7 @@ public class ConversionVideo extends HttpServlet {
           result.setContentType("text/plain");
           result.getWriter().println("Something went wrong. Please try again.");
         }
-        //send email
+
     }
 
 }

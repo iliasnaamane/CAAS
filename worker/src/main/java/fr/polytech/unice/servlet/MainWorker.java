@@ -3,7 +3,6 @@ package fr.polytech.unice.servlet;
 
 
 import com.google.appengine.tools.cloudstorage.*;
-import com.google.common.io.ByteStreams;
 import com.google.common.primitives.Longs;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
@@ -87,24 +86,21 @@ public class MainWorker extends HttpServlet {
             InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
             Util.copy(stream, Channels.newOutputStream(outputChannel));
 
-            // Process convcersion
+            // Process conversion
             try {
                 Thread.sleep((long) Double.parseDouble(videoDuration));
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
 
-            //efacer ou pas l'original video??
+            //effacer ou pas l'original video??
 
             // Update state to done status
             task.state = Task.DONE_STATE;
             task.expired = new Date(System.currentTimeMillis() + expiration);
             ObjectifyService.ofy().save().entity(task).now();
-            System.out.println("finally your task is done " + task.state);
-            response.setContentType("text/html");
-            response.getWriter().println("doneeeeee");
 
-            //send mail that the vonverson is done
+            //send mail that the converson is done
 
             response.getWriter().println("this mail inform you the video conversion is done.");
             Mail mail = new Mail();

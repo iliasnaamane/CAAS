@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-/**
- * Created by ThiernoMamadouCellou on 11/4/2017.
- */
 @SuppressWarnings("serial")
 public class SendMail extends HttpServlet {
 
@@ -26,7 +23,6 @@ public class SendMail extends HttpServlet {
     if (type != null && type.equals("multipart")) {
       resp.getWriter().print("Sending HTML email with attachment.");
       System.out.println("Envoi de mail avec attachement");
-      //sendMultipartMail();
     } else {
       resp.getWriter().print("Sending simple email.");
       sendSimpleMail();
@@ -43,7 +39,7 @@ public class SendMail extends HttpServlet {
       msg.setFrom(new InternetAddress("celloukansily@gmail.com", "Example.com Admin"));
       msg.addRecipient(Message.RecipientType.TO,
         new InternetAddress("baldecellou@hotmail.fr", "Mr. Balde"));
-      msg.setSubject("Votre demande de conversion à été bien prise en compte");
+      msg.setSubject("Your conversion request has been well taken into account");
       msg.setText("This is a test");
       Transport.send(msg);
     } catch (AddressException e) {

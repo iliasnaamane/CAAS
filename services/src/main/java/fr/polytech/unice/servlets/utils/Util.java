@@ -16,6 +16,7 @@ public class Util {
     public static void copy(InputStream input, OutputStream output) throws IOException {
         try {
             byte[] buffer = new byte[BUFFER_SIZE];
+            System.out.println();
             int bytesRead = input.read(buffer);
             while (bytesRead != -1) {
                 output.write(buffer, 0, bytesRead);

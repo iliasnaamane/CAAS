@@ -22,8 +22,8 @@ public class Mail
       msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS"));
       msg.addRecipient(Message.RecipientType.TO,
         new InternetAddress(mail, user));
-      msg.setSubject("la conversion de la video est finie avec succés");
-      msg.setText("voici votre video " + video);
+      msg.setSubject("the video conversion is done with success");
+      msg.setText("your video converted is :  " + video);
       Transport.send(msg);
     } catch (AddressException e) {
 
