@@ -23,6 +23,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
+import fr.polytech.unice.utils.Mail;
+
+
 public class MainWorker extends HttpServlet {
 
 
@@ -102,6 +105,15 @@ public class MainWorker extends HttpServlet {
             response.getWriter().println("doneeeeee");
 
             //send mail that the vonverson is done
+
+            response.getWriter().println("this mail inform you the video conversion is done.");
+            Mail mail = new Mail();
+            try {
+              mail.sendSimpleMail(user.username, "baldecellou@hotmail.fr","test");
+            }catch (Exception e){
+              response.setContentType("text/plain");
+              response.getWriter().println("the mail after conversion not done.");
+            }
 
         }
     }

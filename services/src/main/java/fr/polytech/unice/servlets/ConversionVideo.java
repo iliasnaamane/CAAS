@@ -12,6 +12,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
+import fr.polytech.unice.servlets.utils.Mail;
 import fr.polytech.unice.servlets.utils.Util;
 
 
@@ -106,8 +107,14 @@ public class ConversionVideo extends HttpServlet {
         }
         result.getWriter().println("queue change ");
         queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
-
-
+        result.getWriter().println("Sending mail for notification your demande is done.");
+        Mail mail = new Mail();
+        try {
+          mail.sendSimpleMail(user.username, user.mail,original);
+        }catch (Exception e){
+          result.setContentType("text/plain");
+          result.getWriter().println("Something went wrong. Please try again.");
+        }
         //send email
     }
 
