@@ -12,7 +12,7 @@
         <module>all</module>
         <module>bronze-worker</module>
         <module>silver-worker</module>
-       <!-- <module>gold-worker</module>-->
+        <module>gold-worker</module>
     </modules>
 
     <groupId>fr.polytech.unice</groupId>

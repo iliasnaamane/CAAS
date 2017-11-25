@@ -23,6 +23,13 @@
             <context-root>silver-worker</context-root>
         </web>
     </module>
+
+    <module>
+        <web>
+            <web-uri>gold-worker-1.0.war</web-uri>
+            <context-root>gold-worker</context-root>
+        </web>
+    </module>
    <!-- <module>
         <web>
             <web-uri>services-1.0.war</web-uri>

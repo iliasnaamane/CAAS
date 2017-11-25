@@ -8,6 +8,10 @@
         <url>*/worker/silver/*</url>
         <module>silver-worker</module>
     </dispatch>
+    <dispatch>
+        <url>*/worker/gold/*</url>
+        <module>gold-worker</module>
+    </dispatch>
 
 </dispatch-entries>
 

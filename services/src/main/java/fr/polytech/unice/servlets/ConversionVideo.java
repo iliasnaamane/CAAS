@@ -77,10 +77,10 @@ public class ConversionVideo extends HttpServlet {
                 queue = QueueFactory.getQueue("silver-queue");
                 url = "/worker/silver/";
                 break;
-          /*  case User.GOLD_OFFER:
+            case User.GOLD_OFFER:
                 queue = QueueFactory.getQueue("gold-queue");
-                url = "/worker/gold";
-                break;*/
+                url = "/worker/gold/";
+                break;
             default:
                 result.sendRedirect("/");
                 return;
