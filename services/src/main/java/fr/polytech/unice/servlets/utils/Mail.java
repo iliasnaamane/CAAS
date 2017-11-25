@@ -19,10 +19,11 @@ public class Mail
 
     try {
       Message msg = new MimeMessage(session);
+      System.out.println();
       msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS"));
       msg.addRecipient(Message.RecipientType.TO,
         new InternetAddress(mail, user));
-      msg.setSubject("Votre demande de conversion à été bien prise en compte");
+      msg.setSubject("Votre demande de conversion est prise en compte");
       msg.setText("la conversion de la video " + video  + " est en cours \n");
       Transport.send(msg);
     } catch (AddressException e) {

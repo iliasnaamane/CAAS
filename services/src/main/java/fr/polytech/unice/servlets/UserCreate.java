@@ -41,8 +41,6 @@ public class UserCreate extends HttpServlet {
 
 
 
-        resp.getWriter().println("video Original was save in cloud storage");
-
         //verif if user exist
         List<User> users = ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
         if (users.isEmpty()) {

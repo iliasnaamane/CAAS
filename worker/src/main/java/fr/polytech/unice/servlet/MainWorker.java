@@ -109,7 +109,7 @@ public class MainWorker extends HttpServlet {
             response.getWriter().println("this mail inform you the video conversion is done.");
             Mail mail = new Mail();
             try {
-              mail.sendSimpleMail(user.username, "baldecellou@hotmail.fr","test");
+              mail.sendSimpleMail(user.username ,user.mail,task.converted);
             }catch (Exception e){
               response.setContentType("text/plain");
               response.getWriter().println("the mail after conversion not done.");

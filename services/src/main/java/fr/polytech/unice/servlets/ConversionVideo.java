@@ -107,7 +107,9 @@ public class ConversionVideo extends HttpServlet {
         }
         result.getWriter().println("queue change ");
         queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
-        result.getWriter().println("Sending mail for notification your demande is done.");
+
+        result.getWriter().println("Sending mail for notification your demande is en cours.");
+
         Mail mail = new Mail();
         try {
           mail.sendSimpleMail(user.username, user.mail,original);
