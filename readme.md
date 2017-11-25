@@ -19,7 +19,7 @@ to consult the entities :  http://localhost:8080/_ah/admin/
 
 ## EndPoint
 ### create user
-Posthttps://services-dot-sacc-belhassen-182811.appspot.com/userCreate
+Post https://services-dot-sacc-belhassen-182811.appspot.com/userCreate
 
 request
 ```
@@ -40,6 +40,11 @@ user has been successfully created
 "offer" : 1
 }
 ```
+if user is already exists : 
+```
+can't create user because it already exists ! 
+```
+
 ### Create and store video
 POST https://services-dot-sacc-belhassen-182811.appspot.com/uploadVideo
 
@@ -64,9 +69,9 @@ POST https://services-dot-sacc-belhassen-182811.appspot.com/conversionVideo
 request
 ```
 {
-	"username" : "issam",
-	"original" : "video6-dfe9078c-fb7c-470f-a2ef-8bd7e379463c",
-  "format" : "mp8"
+"username" : "issam",
+"original" : "video6-dfe9078c-fb7c-470f-a2ef-8bd7e379463c",
+"format" : "mp8"
 }
 ```
 
