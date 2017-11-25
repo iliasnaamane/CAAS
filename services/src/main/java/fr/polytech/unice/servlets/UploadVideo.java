@@ -70,7 +70,8 @@ public class UploadVideo extends HttpServlet {
         GcsOutputChannel outputChannel = gcsService.createOrReplace(fileName, instance);
         InputStream stream = new ByteArrayInputStream(original.getBytes(StandardCharsets.UTF_8.name()));
         Util.copy(stream, Channels.newOutputStream(outputChannel));
-        result.getWriter().println("video Original was save in cloud storage");
+        result.getWriter().println("video Original was save in cloud storage : ");
+        result.getWriter().println(original);
 
     }
 
