@@ -80,4 +80,6 @@ result
 user has been found successfully 
 task has been created successfully 
 queue change 
+Sending mail for notification your demande is en cours.
+Sending mail for notification your demande is done.
 ```
