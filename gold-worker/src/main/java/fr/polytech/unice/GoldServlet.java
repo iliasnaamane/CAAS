@@ -13,7 +13,7 @@ import java.io.IOException;
 public class GoldServlet extends MainWorker {
 
     public GoldServlet() {
-        super(5, 60000 * 30);
+        super(5, 60000 * 10);
     }
 
     @Override
