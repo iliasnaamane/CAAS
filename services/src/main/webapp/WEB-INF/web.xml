@@ -16,6 +16,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>ConversionVideo</servlet-name>
+        <servlet-class>fr.polytech.unice.servlets.ConversionVideo</servlet-class>
+    </servlet>
+
+    <servlet>
       <servlet-name>SendMail</servlet-name>
       <servlet-class>fr.polytech.unice.servlets.SendMail</servlet-class>
     </servlet>
@@ -31,6 +36,11 @@
     <servlet-mapping>
         <servlet-name>UploadVideo</servlet-name>
         <url-pattern>/uploadVideo</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ConversionVideo</servlet-name>
+        <url-pattern>/conversionVideo</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
