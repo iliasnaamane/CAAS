@@ -4,6 +4,10 @@
         <url>*/worker/bronze/*</url>
         <module>bronze-worker</module>
     </dispatch>
+    <dispatch>
+        <url>*/worker/silver/*</url>
+        <module>silver-worker</module>
+    </dispatch>
 
 </dispatch-entries>
 
