@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author iliasnaamane
+ * Silver Handler class
  */
 public class SilverHandler {
     private static final GcsService gcsService = GcsServiceFactory.createGcsService(new RetryParams.Builder()
@@ -44,13 +44,16 @@ public class SilverHandler {
     public static void handleTask(Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
        
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
-        if(tasks.size() >= 3){
+        if(tasks.size() >= 4){
+            ObjectifyService.ofy().delete().entity(task).now();
             response.setStatus(400);
             response.getWriter().println("Over quota of 3");
+            
         } 
         else {
             q.add(
-              TaskOptions.Builder.withMethod(TaskOptions.Method.PULL).payload("some content"));
+              TaskOptions.Builder.withMethod(TaskOptions.Method.PULL).payload("some content").tag(user.username.getBytes())
+              );               
               task.state = Task.PENDING_STATE;
               ObjectifyService.ofy().save().entity(task).now();
               
@@ -65,7 +68,7 @@ public class SilverHandler {
             
             
             
-            List<TaskHandle> taskss = q.leaseTasks(3600, TimeUnit.SECONDS, 3);
+            List<TaskHandle> taskss = q.leaseTasksByTag(3600, TimeUnit.SECONDS, tasks.size()+1,user.username);
             String message = processTasks(taskss, q);
             
             response.getWriter().println(message);
@@ -83,6 +86,7 @@ public class SilverHandler {
     }
     
     
+    
     private static String processTasks(List<TaskHandle> tasks, Queue q) throws InterruptedException {
         String payload; String message;
         int numberOfDeletedTasks = 0;
@@ -90,11 +94,10 @@ public class SilverHandler {
             payload = new String(task.getPayload());
             
             String output
-                    = String.format(
-                            "Processing: taskName='%s'  payload='%s'",
-                            task.getName().toString(), payload.toString());
+                    = String.format("Processing: taskName='%s'  payload='%s'",
+                            task.getName(), payload);
             Thread.sleep(1000);
-            output = String.format("Deleting taskName='%s'", task.getName().toString());
+            output = String.format("Deleting taskName='%s'", task.getName());
           
             // [START delete_task]
             q.deleteTask(task);
