@@ -11,7 +11,6 @@
         <module>worker</module>
         <module>all</module>
         <module>bronze-worker</module>
-        <module>silver-worker</module>
        <!-- <module>gold-worker</module>-->
     </modules>
 
