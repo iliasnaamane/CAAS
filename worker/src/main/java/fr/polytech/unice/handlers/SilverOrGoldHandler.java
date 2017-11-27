@@ -42,13 +42,15 @@ public class SilverOrGoldHandler {
             .build());
     
     
-    public static void handleTask(int concurrent,Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
+    public static void handleTask(String offer,int concurrent,Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
        
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
         if(tasks.size() > concurrent){
+            //delete entity from datastore
             ObjectifyService.ofy().delete().entity(task).now();
+            // response
             response.setStatus(400);
-            response.getWriter().println("Over quota of 3");
+            response.getWriter().println(offer+" over quota of "+concurrent);
             
         } 
         else {
@@ -77,8 +79,6 @@ public class SilverOrGoldHandler {
             task.state = Task.DONE_STATE;
             task.expired = new Date(System.currentTimeMillis() + 60000);
             ObjectifyService.ofy().save().entity(task).now();
-            
-            
             
             
                

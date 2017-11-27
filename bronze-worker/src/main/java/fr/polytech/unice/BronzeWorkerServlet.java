@@ -57,15 +57,21 @@ public class BronzeWorkerServlet extends HttpServlet {
             System.out.println("user not found from worker");
             return;
         }
-
+        
+        // Retrieve current task
+         Task task = ObjectifyService.ofy().load().key(Key.create(Key.create(User.class, user.id), Task.class, Longs.tryParse(taskId))).now();
+        
         // Retrieve all tasks
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
         if (tasks.size() > 1) {
+             // delete task from datastore
+             ObjectifyService.ofy().delete().entity(task).now();
             response.setStatus(400);
             response.getWriter().println("Bronze can only convert one ");
+           
+            
         } else {
-            // Retrieve current task
-            Task task = ObjectifyService.ofy().load().key(Key.create(Key.create(User.class, user.id), Task.class, Longs.tryParse(taskId))).now();
+           
             task.state = Task.PENDING_STATE;
             ObjectifyService.ofy().save().entity(task).now();
 

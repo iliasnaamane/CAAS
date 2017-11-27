@@ -82,7 +82,7 @@ public class ConversionVideo extends HttpServlet {
                 queue = QueueFactory.getQueue("silver-queue");
         
                 try {
-                    SilverOrGoldHandler.handleTask(3,task, queue,user,12,req,result);
+                    SilverOrGoldHandler.handleTask("Silver",3,task, queue,user,12,req,result);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -91,7 +91,7 @@ public class ConversionVideo extends HttpServlet {
             case User.GOLD_OFFER:
                 queue = QueueFactory.getQueue("goldd-queue");
                 try {
-                    SilverOrGoldHandler.handleTask(5,task, queue,user,12,req,result);
+                    SilverOrGoldHandler.handleTask("Gold",5,task, queue,user,12,req,result);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
                 }
