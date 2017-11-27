@@ -51,13 +51,13 @@ public class UploadVideo extends HttpServlet {
         
         // Reserve place for original video
        // String original = videoName;
-        String original = videoName.toLowerCase() + "-" + UUID.randomUUID().toString();
+        String original = videoName.toLowerCase()+"-"+UUID.randomUUID().toString();
 
 
         //store video in data store
 
         video = new Video(original,videoDuration);
-       ObjectifyService.ofy().save().entity(video).now();
+        ObjectifyService.ofy().save().entity(video).now();
 
 
         char[] data = new char[1024*1024*videoDuration.intValue()];
@@ -71,7 +71,8 @@ public class UploadVideo extends HttpServlet {
         InputStream stream = new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8.name()));
         Util.copy(stream, Channels.newOutputStream(outputChannel));
         result.getWriter().println("video Original was save in cloud storage : ");
-        result.getWriter().println(original);
+        result.getWriter().println(original.length());
+         result.getWriter().println(original);
 
     }
 

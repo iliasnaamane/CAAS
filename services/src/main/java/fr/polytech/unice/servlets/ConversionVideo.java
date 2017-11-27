@@ -35,11 +35,12 @@ public class ConversionVideo extends HttpServlet {
         String username = obj.get("username").getAsString();
         String original = obj.get("original").getAsString();
         String format = obj.get("format").getAsString();
-
+        result.getWriter().println(original.length());
+        result.getWriter().println(original);
         List<User> users = ObjectifyService.ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
-        List <Video> videos = ObjectifyService.ofy().load().type(Video.class).filter(new Query.FilterPredicate("videoname", Query.FilterOperator.EQUAL, original)).list();
+        List <Video> videos = ObjectifyService.ofy().load().type(Video.class).filter(new Query.FilterPredicate("videoName", Query.FilterOperator.EQUAL, original)).list();
         Long id = null;
-
+        result.getWriter().println(videos.size());
         if (!users.isEmpty()) {
             User user = users.get(0);
             if (user.username.equals(username)) {
@@ -54,12 +55,13 @@ public class ConversionVideo extends HttpServlet {
         }
         
         else{
+             Long idVideo = null;
             Video v = videos.get(0);
             if(v.videoName.equals(original)){
-                id = v.id;
+               idVideo = v.id;
             }
             // Retrieve video data
-            Video video = ObjectifyService.ofy().load().key(Key.create(Video.class, id)).now();
+            Video video = ObjectifyService.ofy().load().key(Key.create(Video.class, idVideo)).now();
             // Retrieve user data
             User user = ObjectifyService.ofy().load().key(Key.create(User.class, id)).now();
 
@@ -95,7 +97,7 @@ public class ConversionVideo extends HttpServlet {
                     queue = QueueFactory.getQueue("silver-queue");
 
                     try {
-                        SilverOrGoldHandler.handleTask("Silver", 3, task, queue, user, 12, req, result);
+                        SilverOrGoldHandler.handleTask("Silver", 3, task, queue, user, video.videoDuration, req, result);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -104,7 +106,7 @@ public class ConversionVideo extends HttpServlet {
                 case User.GOLD_OFFER:
                     queue = QueueFactory.getQueue("goldd-queue");
                     try {
-                        SilverOrGoldHandler.handleTask("Gold", 5, task, queue, user, 12, req, result);
+                        SilverOrGoldHandler.handleTask("Gold", 5, task, queue, user, video.videoDuration, req, result);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
                     }

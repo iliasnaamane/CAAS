@@ -43,7 +43,7 @@ public class SilverOrGoldHandler {
             .build());
     
     
-    public static void handleTask(String offer,int concurrent,Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
+    public static void handleTask(String offer,int concurrent,Task task, Queue q, User user, double duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
         
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
         if(tasks.size() > concurrent){
