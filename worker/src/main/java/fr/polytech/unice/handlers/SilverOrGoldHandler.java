@@ -18,6 +18,7 @@ import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.googlecode.objectify.ObjectifyService;
+import fr.polytech.unice.utils.Mail;
 import fr.polytech.unice.utils.Util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class SilverOrGoldHandler {
     
     
     public static void handleTask(String offer,int concurrent,Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
-       
+        
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
         if(tasks.size() > concurrent){
             //delete entity from datastore
@@ -68,20 +69,23 @@ public class SilverOrGoldHandler {
             GcsOutputChannel outputChannel = gcsService.createOrReplace(convertedFile, instance);
             InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
             Util.copy(stream, Channels.newOutputStream(outputChannel));
-            
-            
-            
             List<TaskHandle> taskss = q.leaseTasksByTag(3600, TimeUnit.SECONDS, tasks.size()+1,user.username);
             String message = processTasks(taskss, q);
             
             response.getWriter().println(message);
             // Update state to done status
             task.state = Task.DONE_STATE;
-            task.expired = new Date(System.currentTimeMillis() + 60000);
-            ObjectifyService.ofy().save().entity(task).now();
-            
-            
+            if(concurrent ==  3)
+                task.expired = new Date(System.currentTimeMillis() + 60000*5);
+            else if(concurrent == 5)
+                task.expired = new Date(System.currentTimeMillis() + 60000*10);
+            Mail mail = new Mail();
+            try {
+                mail.sendSimpleMail(user.username, user.mail, task.original);
+            } catch (Exception e) {
                
+            }
+            ObjectifyService.ofy().save().entity(task).now();  
         }
        
     }
@@ -104,8 +108,10 @@ public class SilverOrGoldHandler {
             q.deleteTask(task);
             // [END delete_task]
             numberOfDeletedTasks++;
+            
         }
         if (numberOfDeletedTasks > 0) {
+            
             message
                     = "Processed and deleted  tasks from the  task queue."+numberOfDeletedTasks;
         } else {

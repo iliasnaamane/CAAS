@@ -29,6 +29,5 @@
             </plugin>
         </plugins>
     </build>
-
-
+    <name>pullWorkerAndUtils</name>
 </project>

@@ -1,55 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5">
-
-
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>fr.polytech.unice.servlets.UserCreate</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>UploadVideo</servlet-name>
         <servlet-class>fr.polytech.unice.servlets.UploadVideo</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>ConversionVideo</servlet-name>
         <servlet-class>fr.polytech.unice.servlets.ConversionVideo</servlet-class>
     </servlet>
-
     <servlet>
-      <servlet-name>SendMail</servlet-name>
-      <servlet-class>fr.polytech.unice.servlets.SendMail</servlet-class>
+        <servlet-name>SendMail</servlet-name>
+        <servlet-class>fr.polytech.unice.servlets.SendMail</servlet-class>
     </servlet>
-
-
-
-
+    <servlet>
+        <servlet-name>DeleteVideos</servlet-name>
+        <servlet-class>fr.polytech.unice.servlets.DeleteVideos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/userCreate</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>UploadVideo</servlet-name>
         <url-pattern>/uploadVideo</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ConversionVideo</servlet-name>
         <url-pattern>/conversionVideo</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
-      <servlet-name>SendMail</servlet-name>
-      <url-pattern>/sendMail</url-pattern>
+        <servlet-name>SendMail</servlet-name>
+        <url-pattern>/sendMail</url-pattern>
     </servlet-mapping>
-
-
-
+    <servlet-mapping>
+        <servlet-name>DeleteVideos</servlet-name>
+        <url-pattern>/deleteVideos</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>ObjectifyFilter</filter-name>
         <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>

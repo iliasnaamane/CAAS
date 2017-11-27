@@ -44,14 +44,14 @@ public class UploadVideo extends HttpServlet {
         System.out.println("videoName : " + videoName);
         System.out.println("videoDuration : " + videoDuration);
 
-
+        
+        
 
         // Reserve place for original video
-        String original = videoName.toLowerCase() + "-" + UUID.randomUUID().toString();
-
-        char[] data = new char[1000000];
+        String original = videoName;
+        char[] data = new char[1024*1024*videoDuration.intValue()];
         String fileContent = new String(data);
-        //stoke the original video into google cloud storage
+        //store the original video into google cloud storage
 
         GcsFileOptions instance = GcsFileOptions.getDefaultInstance();
         GcsFilename fileName = new GcsFilename("staging.sacc-belhassen-182811.appspot.com", original);
