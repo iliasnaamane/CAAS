@@ -12,6 +12,7 @@
         <module>all</module>
         <module>bronze-worker</module>
        <!-- <module>gold-worker</module>-->
+        <module>tests</module>
     </modules>
 
     <groupId>fr.polytech.unice</groupId>
