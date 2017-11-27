@@ -79,6 +79,8 @@ public class SilverOrGoldHandler {
                 task.expired = new Date(System.currentTimeMillis() + 60000*5);
             else if(concurrent == 5)
                 task.expired = new Date(System.currentTimeMillis() + 60000*10);
+           
+            // send mail with done status
             Mail mail = new Mail();
             try {
                 mail.sendSimpleMail(user.username, user.mail, task.original);

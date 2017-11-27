@@ -1,8 +1,6 @@
 package fr.polytech.unice.servlets;
 
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.tools.cloudstorage.*;
-import com.google.common.io.ByteStreams;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.channels.Channels;
 import java.util.List;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;

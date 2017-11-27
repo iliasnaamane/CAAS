@@ -19,7 +19,6 @@ import java.nio.channels.Channels;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.UUID;
 
 
 public class UploadVideo extends HttpServlet {
@@ -45,11 +44,10 @@ public class UploadVideo extends HttpServlet {
         System.out.println("videoDuration : " + videoDuration);
 
         
-        
-
         // Reserve place for original video
         String original = videoName;
-        char[] data = new char[1024*1024*videoDuration.intValue()];
+        int sizeFile = 1024*1024*videoDuration.intValue();
+        char[] data = new char[sizeFile];
         String fileContent = new String(data);
         //store the original video into google cloud storage
 

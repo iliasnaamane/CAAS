@@ -15,14 +15,11 @@ import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
 import fr.polytech.unice.utils.Mail;
 import fr.polytech.unice.utils.Util;
-import java.io.ByteArrayInputStream;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.channels.Channels;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServlet;
@@ -90,10 +87,8 @@ public class BronzeWorkerServlet extends HttpServlet {
             }
             
             GcsOutputChannel outputChannel = gcsService.createOrReplace(convertedFile, instance);
-            InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
-            Util.copy(stream, Channels.newOutputStream(outputChannel));
-
-            
+            //InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
+            Util.copy(Channels.newInputStream(inputChannel), Channels.newOutputStream(outputChannel));
 
             //effacer ou pas l'original video??
 

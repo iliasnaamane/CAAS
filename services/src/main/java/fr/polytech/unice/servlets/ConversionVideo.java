@@ -61,7 +61,7 @@ public class ConversionVideo extends HttpServlet {
 
 
         // Reserve place for converted video
-        String converted = user.username.toLowerCase() + "-" + UUID.randomUUID().toString();
+        String converted = "converted -"+ user.username.toLowerCase()+" "+original;
 
 
         // Create a new task
