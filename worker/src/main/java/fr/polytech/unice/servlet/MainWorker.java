@@ -35,10 +35,10 @@ public class MainWorker extends HttpServlet {
             .build());
 
     // Concurrent policy
-    private int concurrent;
+    private final int concurrent;
 
     // Expiration policy
-    private long expiration;
+    private final long expiration;
 
     public MainWorker(int concurrent, long expiration) {
         this.concurrent = concurrent;
@@ -82,16 +82,19 @@ public class MainWorker extends HttpServlet {
             GcsFilename originalFile = new GcsFilename("staging.sacc-belhassen-182811.appspot.com", task.original);
             GcsFilename convertedFile = new GcsFilename("staging.sacc-belhassen-182811.appspot.com", task.converted);
             GcsInputChannel inputChannel = gcsService.openReadChannel(originalFile, 0);
-            GcsOutputChannel outputChannel = gcsService.createOrReplace(convertedFile, instance);
-            InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
-            Util.copy(stream, Channels.newOutputStream(outputChannel));
-
+            
             // Process conversion
             try {
                 Thread.sleep((long) Double.parseDouble(videoDuration));
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
+            
+            GcsOutputChannel outputChannel = gcsService.createOrReplace(convertedFile, instance);
+            InputStream stream = new ByteArrayInputStream(task.original.getBytes(StandardCharsets.UTF_8.name()));
+            Util.copy(stream, Channels.newOutputStream(outputChannel));
+
+            
 
             //effacer ou pas l'original video??
 

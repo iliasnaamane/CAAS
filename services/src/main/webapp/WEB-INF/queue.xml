@@ -9,10 +9,7 @@
     </queue>
     <queue>
         <name>silver-queue</name>
-        <mode>push</mode>
-        <rate>1/s</rate>
-        <target>worker-silver</target>
-        <max-concurrent-requests>10</max-concurrent-requests>
+        <mode>pull</mode>
     </queue>
     <queue>
         <name>gold-queue</name>

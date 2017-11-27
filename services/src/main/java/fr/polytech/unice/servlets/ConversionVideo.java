@@ -11,16 +11,20 @@ import com.googlecode.objectify.ObjectifyService;
 import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
 import fr.polytech.unice.servlets.utils.Mail;
+import fr.polytech.unice.utils.SilverHandler;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
 
 public class ConversionVideo extends HttpServlet {
 
-    @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException {
+    @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException, ServletException {
         result.setContentType("text/html");
 
         //get username ,videoName and format  from request
@@ -72,10 +76,17 @@ public class ConversionVideo extends HttpServlet {
             case User.BRONZE_OFFER:
                 queue = QueueFactory.getQueue("bronze-queue");
                 url = "/worker/bronze/";
+                queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
                 break;
             case User.SILVER_OFFER:
                 queue = QueueFactory.getQueue("silver-queue");
-                url = "/worker/silver/";
+        {
+            try {
+                SilverHandler.handleTask(task, queue,user,12,req,result);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
             case User.GOLD_OFFER:
                 queue = QueueFactory.getQueue("gold-queue");
@@ -87,7 +98,7 @@ public class ConversionVideo extends HttpServlet {
         }
         result.getWriter().println("queue change ");
 
-        queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
+      
 
         result.getWriter().println("Sending mail for notification your demande is en cours.");
         result.getWriter().println("Sending mail for notification your demande is done.");
