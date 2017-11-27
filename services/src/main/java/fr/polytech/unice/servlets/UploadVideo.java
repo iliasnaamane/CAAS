@@ -71,8 +71,7 @@ public class UploadVideo extends HttpServlet {
         InputStream stream = new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8.name()));
         Util.copy(stream, Channels.newOutputStream(outputChannel));
         result.getWriter().println("video Original was save in cloud storage : ");
-        result.getWriter().println(original.length());
-         result.getWriter().println(original);
+        result.getWriter().println(original);
 
     }
 

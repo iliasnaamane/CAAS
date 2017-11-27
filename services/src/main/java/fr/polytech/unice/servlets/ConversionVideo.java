@@ -35,12 +35,10 @@ public class ConversionVideo extends HttpServlet {
         String username = obj.get("username").getAsString();
         String original = obj.get("original").getAsString();
         String format = obj.get("format").getAsString();
-        result.getWriter().println(original.length());
         result.getWriter().println(original);
         List<User> users = ObjectifyService.ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
         List <Video> videos = ObjectifyService.ofy().load().type(Video.class).filter(new Query.FilterPredicate("videoName", Query.FilterOperator.EQUAL, original)).list();
         Long id = null;
-        result.getWriter().println(videos.size());
         if (!users.isEmpty()) {
             User user = users.get(0);
             if (user.username.equals(username)) {
