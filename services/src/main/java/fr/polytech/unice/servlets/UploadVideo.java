@@ -53,11 +53,12 @@ public class UploadVideo extends HttpServlet {
        // String original = videoName;
         String original = videoName.toLowerCase() + "-" + UUID.randomUUID().toString();
 
+
         //store video in data store
-
-
-        video = new Video(videoName,videoDuration);
+        video = new Video(original,videoDuration);
         ObjectifyService.ofy().save().entity(video).now();
+
+
         char[] data = new char[1024*1024*videoDuration.intValue()];
 
         String fileContent = new String(data);
