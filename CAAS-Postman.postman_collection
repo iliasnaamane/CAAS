@@ -1,90 +1,83 @@
 {
-	"id": "c5ee6ce5-48cd-d5d5-4aac-ce280f0a90e9",
-	"name": "CAAS-Postman",
-	"description": "",
-	"order": [
-		"ddb42f03-ab3c-4a5d-4ef5-b3e6ad5920ca",
-		"996a393a-8547-09b9-d5bb-99a0fd84d8d2"
-	],
-	"folders": [],
-	"folders_order": [],
-	"timestamp": 1511821216282,
-	"owner": "1166119",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "CAAS-Postman",
+		"_postman_id": "c5ee6ce5-48cd-d5d5-4aac-ce280f0a90e9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "996a393a-8547-09b9-d5bb-99a0fd84d8d2",
-			"headers": "Content-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://services-dot-sacc-belhassen-182811.appspot.com/uploadVideo",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "POST",
-			"collectionId": "c5ee6ce5-48cd-d5d5-4aac-ce280f0a90e9",
-			"data": [],
-			"dataMode": "raw",
-			"name": "http://sacc-belhassen-182811.appspot.com/uploadVideo",
-			"description": "Cette requete prend en param le nom de la vidéo et la durée de la video",
-			"descriptionFormat": "html",
-			"time": 1511821337557,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\n\"videoName\" : \"test-video\",\n\"videoDuration\" :14\n}"
+			"name": "https://services-dot-sacc-belhassen-182811.appspot.com/userCreate",
+			"request": {
+				"url": "https://services-dot-sacc-belhassen-182811.appspot.com/userCreate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"username\" :\"gold-user\",\n\"mail\" : \"ilias.naamane1@gmail.com\",\n\"offer\" : 3\n} "
+				},
+				"description": "Cette requete prend en parms:\n\nUsername, Mail, et Offre\n\nOffre prend 3 values ( 1, 2, 3 ) équivalent à ( Bronze, Silver, Gold )"
+			},
+			"response": []
 		},
 		{
-			"id": "ddb42f03-ab3c-4a5d-4ef5-b3e6ad5920ca",
-			"headers": "//X-Requested-With: XMLHttpRequest\n//Accept: application/json\nContent-Type: application/json\n",
-			"headerData": [
-				{
-					"key": "X-Requested-With",
-					"value": "XMLHttpRequest",
-					"description": "",
-					"enabled": false
+			"name": "http://sacc-belhassen-182811.appspot.com/uploadVideo",
+			"request": {
+				"url": "https://services-dot-sacc-belhassen-182811.appspot.com/uploadVideo",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"videoName\" : \"test-video\",\n\"videoDuration\" :14\n}"
 				},
-				{
-					"key": "Accept",
-					"value": "application/json",
-					"description": "",
-					"enabled": false
+				"description": "Cette requete prend en param le nom de la vidéo et la durée de la video"
+			},
+			"response": []
+		},
+		{
+			"name": "https://services-dot-sacc-belhassen-182811.appspot.com/conversionVideo",
+			"request": {
+				"url": "https://services-dot-sacc-belhassen-182811.appspot.com/conversionVideo",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"username\" : \"gold-user\",\n\"original\" : \"aaaaa-9726fc3e-5423-480b-b3a4-329a0f9bfe74\"\n}"
 				},
-				{
-					"key": "Content-Type",
-					"value": "application/json",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://services-dot-sacc-belhassen-182811.appspot.com/userCreate",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": "",
-			"method": "POST",
-			"collectionId": "c5ee6ce5-48cd-d5d5-4aac-ce280f0a90e9",
-			"data": [],
-			"dataMode": "raw",
-			"name": "https://services-dot-sacc-belhassen-182811.appspot.com/userCreate",
-			"description": "Cette requete prend en parms:\n\nUsername, Mail, et Offre\n\nOffre prend 3 values ( 1, 2, 3 ) équivalent à ( Bronze, Silver, Gold )",
-			"descriptionFormat": "html",
-			"time": 1511821303327,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"rawModeData": "{\n\"username\" :\"gold-user\",\n\"mail\" : \"ilias.naamane1@gmail.com\",\n\"offer\" : 3\n} "
+				"description": "Pour cette requete on donne 2 params:\n\nLe username et le nom du fichier (video ) retourné comme reponse lors de l'upload. "
+			},
+			"response": []
 		}
 	]
 }
