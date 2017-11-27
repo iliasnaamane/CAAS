@@ -32,20 +32,6 @@
             <type>war</type>
         </dependency>
 
-        <dependency>
-            <groupId>fr.polytech.unice</groupId>
-            <artifactId>silver-worker</artifactId>
-            <version>${project.parent.version}</version>
-            <type>war</type>
-        </dependency>
-
-        <dependency>
-            <groupId>fr.polytech.unice</groupId>
-            <artifactId>gold-worker</artifactId>
-            <version>${project.parent.version}</version>
-            <type>war</type>
-        </dependency>
-
     </dependencies>
     <build>
         <plugins>

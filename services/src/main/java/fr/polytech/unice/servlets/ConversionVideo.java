@@ -11,7 +11,7 @@ import com.googlecode.objectify.ObjectifyService;
 import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
 import fr.polytech.unice.servlets.utils.Mail;
-import fr.polytech.unice.utils.SilverHandler;
+import fr.polytech.unice.handlers.SilverOrGoldHandler;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,17 +80,21 @@ public class ConversionVideo extends HttpServlet {
                 break;
             case User.SILVER_OFFER:
                 queue = QueueFactory.getQueue("silver-queue");
-        {
-            try {
-                SilverHandler.handleTask(task, queue,user,12,req,result);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
+                try {
+                    SilverOrGoldHandler.handleTask(3,task, queue,user,12,req,result);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        
                 break;
             case User.GOLD_OFFER:
-                queue = QueueFactory.getQueue("gold-queue");
-                url = "/worker/gold/";
+                queue = QueueFactory.getQueue("goldd-queue");
+                try {
+                    SilverOrGoldHandler.handleTask(5,task, queue,user,12,req,result);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             default:
                 result.sendRedirect("/");

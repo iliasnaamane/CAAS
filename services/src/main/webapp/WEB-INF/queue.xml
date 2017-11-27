@@ -12,10 +12,7 @@
         <mode>pull</mode>
     </queue>
     <queue>
-        <name>gold-queue</name>
-        <mode>push</mode>
-        <rate>1/s</rate>
-        <target>worker-gold</target>
-        <max-concurrent-requests>20</max-concurrent-requests>
+        <name>goldd-queue</name>
+        <mode>pull</mode>
     </queue>
 </queue-entries>

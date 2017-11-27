@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fr.polytech.unice.utils;
+package fr.polytech.unice.handlers;
 
 import com.google.appengine.api.taskqueue.TaskOptions;
 import fr.polytech.unice.model.Task;
@@ -18,6 +18,7 @@ import com.google.appengine.tools.cloudstorage.GcsService;
 import com.google.appengine.tools.cloudstorage.GcsServiceFactory;
 import com.google.appengine.tools.cloudstorage.RetryParams;
 import com.googlecode.objectify.ObjectifyService;
+import fr.polytech.unice.utils.Util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * Silver Handler class
  */
-public class SilverHandler {
+public class SilverOrGoldHandler {
     private static final GcsService gcsService = GcsServiceFactory.createGcsService(new RetryParams.Builder()
             .initialRetryDelayMillis(10)
             .retryMaxAttempts(10)
@@ -41,10 +42,10 @@ public class SilverHandler {
             .build());
     
     
-    public static void handleTask(Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
+    public static void handleTask(int concurrent,Task task, Queue q, User user, int duration, HttpServletRequest request, HttpServletResponse response) throws IOException, InterruptedException{
        
         List<Task> tasks = ObjectifyService.ofy().load().type(Task.class).ancestor(user).filter("state =", 0).order("-created").list();
-        if(tasks.size() >= 4){
+        if(tasks.size() > concurrent){
             ObjectifyService.ofy().delete().entity(task).now();
             response.setStatus(400);
             response.getWriter().println("Over quota of 3");
