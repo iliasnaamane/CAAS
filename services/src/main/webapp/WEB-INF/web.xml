@@ -13,10 +13,6 @@
         <servlet-class>fr.polytech.unice.servlets.ConversionVideo</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SendMail</servlet-name>
-        <servlet-class>fr.polytech.unice.servlets.SendMail</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DeleteVideos</servlet-name>
         <servlet-class>fr.polytech.unice.servlets.DeleteVideos</servlet-class>
     </servlet>
@@ -31,10 +27,6 @@
     <servlet-mapping>
         <servlet-name>ConversionVideo</servlet-name>
         <url-pattern>/conversionVideo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SendMail</servlet-name>
-        <url-pattern>/sendMail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteVideos</servlet-name>

@@ -55,8 +55,9 @@ public class UploadVideo extends HttpServlet {
 
 
         //store video in data store
+
         video = new Video(original,videoDuration);
-        ObjectifyService.ofy().save().entity(video).now();
+       ObjectifyService.ofy().save().entity(video).now();
 
 
         char[] data = new char[1024*1024*videoDuration.intValue()];
