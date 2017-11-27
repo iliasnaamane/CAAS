@@ -62,7 +62,7 @@ public class ConversionVideo extends HttpServlet {
 
         // Reserve place for converted video
 
-        String converted = original+"-"+user.username.toLowerCase() + "-" + UUID.randomUUID().toString() +"-CONVERTI";
+        String converted ="CONVERTI-"+ user.username.toLowerCase() + "-" + UUID.randomUUID().toString() ;
         // Create a new task
         Task task = new Task(Key.create(User.class, user.id), original, converted, (format != null) ? format : "unknown");
         ObjectifyService.ofy().save().entity(task).now();
