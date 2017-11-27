@@ -12,6 +12,7 @@ import fr.polytech.unice.model.Task;
 import fr.polytech.unice.model.User;
 import fr.polytech.unice.servlets.utils.Mail;
 import fr.polytech.unice.handlers.SilverOrGoldHandler;
+import fr.polytech.unice.model.Video;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +37,7 @@ public class ConversionVideo extends HttpServlet {
         String format = obj.get("format").getAsString();
 
         List<User> users = ObjectifyService.ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
-
+        List <Video> videos = ObjectifyService.ofy().load().type(Video.class).filter(new Query.FilterPredicate("videoname", Query.FilterOperator.EQUAL, original)).list();
         Long id = null;
 
         if (!users.isEmpty()) {
@@ -45,75 +46,91 @@ public class ConversionVideo extends HttpServlet {
                 id = user.id;
             }
         }
-
-        // Retrieve user data
-        User user = ObjectifyService.ofy().load().key(Key.create(User.class, id)).now();
-        if (user == null) {
-            System.out.println("user not found ! ");
-            result.getWriter().println("user not found ! ");
-        } else {
-            System.out.println("get user successfully");
-            System.out.println(" user-id " + user.id);
-            System.out.println("user-name " + user.username);
-            System.out.println("user- emal " + user.mail);
-            result.getWriter().println("user has been found successfully ");
-        }
-
-
-        // Reserve place for converted video
-
-        String converted = original+"-"+user.username.toLowerCase() + "-" + UUID.randomUUID().toString() +"-CONVERTI";
-        // Create a new task
-        Task task = new Task(Key.create(User.class, user.id), original, converted, (format != null) ? format : "unknown");
-        ObjectifyService.ofy().save().entity(task).now();
-        result.getWriter().println("task has been created successfully ");
-
-        // Enqueue task
-        Queue queue;
-        String url;
-        switch (user.offer) {
-            case User.BRONZE_OFFER:
-                queue = QueueFactory.getQueue("bronze-queue");
-                url = "/worker/bronze/";
-                queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf("12")));
-                break;
-            case User.SILVER_OFFER:
-                queue = QueueFactory.getQueue("silver-queue");
         
-                try {
-                    SilverOrGoldHandler.handleTask("Silver",3,task, queue,user,12,req,result);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if(videos.isEmpty()){
+            System.out.println("video not found ! ");
+            result.getWriter().println("video not found ! ");
+            result.setStatus(400);
+        }
         
-                break;
-            case User.GOLD_OFFER:
-                queue = QueueFactory.getQueue("goldd-queue");
-                try {
-                    SilverOrGoldHandler.handleTask("Gold",5,task, queue,user,12,req,result);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                break;
-            default:
-                result.sendRedirect("/");
-                return;
+        else{
+            Video v = videos.get(0);
+            if(v.videoName.equals(original)){
+                id = v.id;
+            }
+            // Retrieve video data
+            Video video = ObjectifyService.ofy().load().key(Key.create(Video.class, id)).now();
+            // Retrieve user data
+            User user = ObjectifyService.ofy().load().key(Key.create(User.class, id)).now();
+
+            if (user == null) {
+                System.out.println("user not found ! ");
+                result.getWriter().println("user not found ! ");
+            } else {
+                System.out.println("get user successfully");
+                System.out.println(" user-id " + user.id);
+                System.out.println("user-name " + user.username);
+                System.out.println("user- emal " + user.mail);
+                result.getWriter().println("user has been found successfully ");
+            }
+
+            // Reserve place for converted video
+            String converted = original + "-" + user.username.toLowerCase() + "-" + UUID.randomUUID().toString() + "-CONVERTI";
+            // Create a new task
+            Task task = new Task(Key.create(User.class, user.id), original, converted, (format != null) ? format : "unknown");
+            ObjectifyService.ofy().save().entity(task).now();
+            result.getWriter().println("task has been created successfully ");
+
+            // Enqueue task
+            Queue queue;
+            String url;
+            switch (user.offer) {
+                case User.BRONZE_OFFER:
+                    queue = QueueFactory.getQueue("bronze-queue");
+                    url = "/worker/bronze/";
+                    queue.add(TaskOptions.Builder.withUrl(url).method(TaskOptions.Method.POST).param("user", String.valueOf(user.id)).param("task", String.valueOf(task.id)).param("videoDuration", String.valueOf(video.videoDuration)));
+                    break;
+                case User.SILVER_OFFER:
+                    queue = QueueFactory.getQueue("silver-queue");
+
+                    try {
+                        SilverOrGoldHandler.handleTask("Silver", 3, task, queue, user, 12, req, result);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    break;
+                case User.GOLD_OFFER:
+                    queue = QueueFactory.getQueue("goldd-queue");
+                    try {
+                        SilverOrGoldHandler.handleTask("Gold", 5, task, queue, user, 12, req, result);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ConversionVideo.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
+                default:
+                    result.sendRedirect("/");
+                    return;
+            }
+            result.getWriter().println("queue change ");
+
+            result.getWriter().println("Sending mail for notification your demande is en cours.");
+            result.getWriter().println("Sending mail for notification your demande is done.");
+
+            //send email
+            Mail mail = new Mail();
+            try {
+                mail.sendSimpleMail(user.username, user.mail, original);
+            } catch (Exception e) {
+                result.setContentType("text/plain");
+                result.getWriter().println("Something went wrong. Please try again.");
+            }
+        
+        
+        
         }
-        result.getWriter().println("queue change ");
-
-      
-
-        result.getWriter().println("Sending mail for notification your demande is en cours.");
-        result.getWriter().println("Sending mail for notification your demande is done.");
-
-        //send email
-        Mail mail = new Mail();
-        try {
-          mail.sendSimpleMail(user.username, user.mail,original);
-        }catch (Exception e){
-          result.setContentType("text/plain");
-          result.getWriter().println("Something went wrong. Please try again.");
-        }
+        
+        
 
     }
 

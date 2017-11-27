@@ -12,6 +12,9 @@ public class Util {
     private static final int BUFFER_SIZE = 2 * 1024 * 1024;
     /**
      * Transfer the data from the inputStream to the outputStream. Then close both streams.
+     * @param input
+     * @param output
+     * @throws java.io.IOException
      */
     public static void copy(InputStream input, OutputStream output) throws IOException {
         try {
