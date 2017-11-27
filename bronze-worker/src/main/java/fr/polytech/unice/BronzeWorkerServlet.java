@@ -99,7 +99,7 @@ public class BronzeWorkerServlet extends HttpServlet {
 
             // Update state to done status
             task.state = Task.DONE_STATE;
-            task.expired = new Date(System.currentTimeMillis() + 60000);
+            task.expired = new Date(System.currentTimeMillis() + 60000 * 5);
             ObjectifyService.ofy().save().entity(task).now();
 
             //send mail that the converson is done
