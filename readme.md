@@ -11,11 +11,17 @@ This is a REST based service. It uses the Rest protocol to achieve its exchanges
 
 ##### To launch and test the application in local : 
 
+
    ../CAAS $  ./build.sh
     
    ../CAAS/all $ mvn appengine:devserver
    
 to consult the entities :  http://localhost:8080/_ah/admin/
+
+pour faire fonctionner l’architecture service module, on doit utiliser le dispatch
+qui re route les appelles vers les bons modules(le cas pour le bronze) or en dev le fichier dispatch est ignoré (cf.
+doc sur disptach.xml), 
+pour tester le service bronze donc il faut tester directement en production.
 
 ## EndPoint
 ### create user
