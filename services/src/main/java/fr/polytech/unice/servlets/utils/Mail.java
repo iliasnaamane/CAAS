@@ -20,11 +20,11 @@ public class Mail
     try {
       Message msg = new MimeMessage(session);
       System.out.println();
-      msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS"));
+      msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS-Team BELHASSEN"));
       msg.addRecipient(Message.RecipientType.TO,
         new InternetAddress(mail, user));
       msg.setSubject("Your conversion request has been well taken into account");
-      msg.setText("the conversion of  " + video  + " is in progress \n");
+      msg.setText("the conversion of  " + video  + " is in progress \n BELHASSEN-NAAMANE-THIERNO-ELMRIHY");
       Transport.send(msg);
     } catch (AddressException e) {
 

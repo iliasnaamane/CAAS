@@ -19,11 +19,11 @@ public class Mail
 
     try {
       Message msg = new MimeMessage(session);
-      msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS"));
+      msg.setFrom(new InternetAddress("celloukansily@gmail.com", "CAAS-Team BELHASSEN"));
       msg.addRecipient(Message.RecipientType.TO,
         new InternetAddress(mail, user));
       msg.setSubject("the video conversion is done with success");
-      msg.setText("your video converted is :  " + video);
+      msg.setText("your video converted is :  " + video  + "\n BELHASSEN-NAAMANE-THIERNO-ELMRIHY");
       Transport.send(msg);
     } catch (AddressException e) {
 
