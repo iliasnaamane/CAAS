@@ -5,6 +5,8 @@ import com.google.appengine.tools.cloudstorage.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import com.googlecode.objectify.ObjectifyService;
+import fr.polytech.unice.model.Video;
 import fr.polytech.unice.servlets.utils.Util;
 
 
@@ -33,6 +35,8 @@ public class UploadVideo extends HttpServlet {
     @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException {
         result.setContentType("text/html");
 
+        Video video;
+
         //get videoName and duration  from request
         JsonParser parser = new JsonParser();
         JsonObject obj = parser.parse(req.getReader()).getAsJsonObject();
@@ -49,6 +53,11 @@ public class UploadVideo extends HttpServlet {
        // String original = videoName;
         String original = videoName.toLowerCase() + "-" + UUID.randomUUID().toString();
 
+        //store video in data store
+
+
+        video = new Video(videoName,videoDuration);
+        ObjectifyService.ofy().save().entity(video).now();
         char[] data = new char[1024*1024*videoDuration.intValue()];
 
         String fileContent = new String(data);
