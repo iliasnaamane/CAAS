@@ -77,7 +77,6 @@ request
 {
 "username" : "issam",
 "original" : "video6-dfe9078c-fb7c-470f-a2ef-8bd7e379463c",
-"format" : "mp8"
 }
 ```
 

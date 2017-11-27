@@ -28,13 +28,15 @@ public class ConversionVideo extends HttpServlet {
     @Override public void doPost(HttpServletRequest req, HttpServletResponse result) throws IOException, ServletException {
         result.setContentType("text/html");
 
+        String format = "mp4";
+
         //get username ,videoName and format  from request
         JsonParser parser = new JsonParser();
         JsonObject obj = parser.parse(req.getReader()).getAsJsonObject();
 
         String username = obj.get("username").getAsString();
         String original = obj.get("original").getAsString();
-        String format = obj.get("format").getAsString();
+
         result.getWriter().println(original);
         List<User> users = ObjectifyService.ofy().load().type(User.class).filter(new Query.FilterPredicate("username", Query.FilterOperator.EQUAL, username)).list();
         List <Video> videos = ObjectifyService.ofy().load().type(Video.class).filter(new Query.FilterPredicate("videoName", Query.FilterOperator.EQUAL, original)).list();
